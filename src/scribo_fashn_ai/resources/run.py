@@ -151,7 +151,7 @@ class RunResource(SyncAPIResource):
             extra_body=extra_body,
             timeout=request_timeout,
         )
-        
+
         if not response.id:
             raise ValueError("Prediction ID is required")
 
@@ -183,14 +183,14 @@ class RunResource(SyncAPIResource):
     ) -> StatusRetrieveResponse:
         poll_interval = pool_interval if pool_interval is not None else DEFAULT_POOL_INTERVAL
         timeout_duration = timeout if timeout is not None else DEFAULT_TIMEOUT
-        
+
         start_time = time.time()
-        
+
         while True:
             current_time = time.time()
             if timeout_duration and (current_time - start_time) > timeout_duration:
                 raise TimeoutError("Timeout exceeded while waiting for prediction completion")
-            
+
             try:
                 status = self._client.status.retrieve(
                     id,
@@ -199,16 +199,16 @@ class RunResource(SyncAPIResource):
                     extra_body=extra_body,
                     timeout=request_timeout,
                 )
-                
+
                 if on_queue_update:
                     on_queue_update(status)
-                
+
                 if status.status == "completed":
                     return status
                 elif status.status == "failed":
                     error_msg = status.error or "Unknown error"
                     raise RuntimeError(f"Prediction failed: {error_msg}")
-                
+
                 self._sleep(poll_interval)
             except Exception as e:
                 if isinstance(e, (TimeoutError, RuntimeError)):
@@ -338,7 +338,7 @@ class AsyncRunResource(AsyncAPIResource):
             extra_body=extra_body,
             timeout=request_timeout,
         )
-        
+
         if not response.id:
             raise ValueError("Prediction ID is required")
 
@@ -370,14 +370,14 @@ class AsyncRunResource(AsyncAPIResource):
     ) -> StatusRetrieveResponse:
         poll_interval = pool_interval if pool_interval is not None else DEFAULT_POOL_INTERVAL
         timeout_duration = timeout if timeout is not None else DEFAULT_TIMEOUT
-        
+
         start_time = time.time()
-        
+
         while True:
             current_time = time.time()
             if timeout_duration and (current_time - start_time) > timeout_duration:
                 raise TimeoutError("Timeout exceeded while waiting for prediction completion")
-            
+
             try:
                 status = await self._client.status.retrieve(
                     id,
@@ -386,16 +386,16 @@ class AsyncRunResource(AsyncAPIResource):
                     extra_body=extra_body,
                     timeout=request_timeout,
                 )
-                
+
                 if on_queue_update:
                     on_queue_update(status)
-                
+
                 if status.status == "completed":
                     return status
                 elif status.status == "failed":
                     error_msg = status.error or "Unknown error"
                     raise RuntimeError(f"Prediction failed: {error_msg}")
-                
+
                 await self._sleep(poll_interval)
             except Exception as e:
                 if isinstance(e, (TimeoutError, RuntimeError)):

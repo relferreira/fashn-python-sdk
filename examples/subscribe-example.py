@@ -8,25 +8,30 @@ asynchronous usage patterns.
 
 import os
 import asyncio
-from scribo_fashn_ai import ScriboFashnAI, AsyncScriboFashnAI
 
-print("="*50)
+from scribo_fashn_ai import ScriboFashnAI, AsyncScriboFashnAI
+from scribo_fashn_ai.types.status_retrieve_response import StatusRetrieveResponse
+
+print("=" * 50)
 print("SYNCHRONOUS EXAMPLE")
-print("="*50)
+print("=" * 50)
 
 client = ScriboFashnAI(
-    api_key=os.environ.get("SCRIBO_FASHN_AI_API_KEY"), 
+    api_key=os.environ.get("SCRIBO_FASHN_AI_API_KEY"),
 )
+
 
 def on_enqueued(request_id: str) -> None:
     print(f"Prediction enqueued with ID: {request_id}")
 
-def on_queue_update(status) -> None:
+
+def on_queue_update(status: StatusRetrieveResponse) -> None:
     print(f"Status update: {status.status}")
     if status.status == "processing":
         print("Your try-on is being processed...")
     elif status.status == "in_queue":
         print("Your try-on is in queue...")
+
 
 try:
     response = client.run.subscribe(
@@ -36,16 +41,16 @@ try:
         },
         model_name="tryon-v1.6",
         pool_interval=1.0,  # Poll every 1 second
-        timeout=120.0,      # Timeout after 2 minutes
+        timeout=120.0,  # Timeout after 2 minutes
         on_enqueued=on_enqueued,
         on_queue_update=on_queue_update,
     )
-    
+
     print("Try-on completed!")
     print(f"Final status: {response.status}")
     if response.output:
         print(f"Output images: {response.output}")
-    
+
 except TimeoutError:
     print("The prediction timed out")
 except RuntimeError as e:
@@ -55,25 +60,28 @@ except Exception as e:
 
 
 # Async Example
-print("\n" + "="*50)
+print("\n" + "=" * 50)
 print("ASYNC EXAMPLE")
-print("="*50)
+print("=" * 50)
 
 async_client = AsyncScriboFashnAI(
     api_key=os.environ.get("SCRIBO_FASHN_AI_API_KEY"),  # This is the default and can be omitted
 )
 
+
 def async_on_enqueued(request_id: str) -> None:
     print(f"[ASYNC] Prediction enqueued with ID: {request_id}")
 
-def async_on_queue_update(status) -> None:
+
+def async_on_queue_update(status: StatusRetrieveResponse) -> None:
     print(f"[ASYNC] Status update: {status.status}")
     if status.status == "processing":
         print("[ASYNC] Your try-on is being processed...")
     elif status.status == "in_queue":
         print("[ASYNC] Your try-on is in queue...")
 
-async def run_async_example():
+
+async def run_async_example() -> None:
     try:
         response = await async_client.run.subscribe(
             inputs={
@@ -82,22 +90,23 @@ async def run_async_example():
             },
             model_name="tryon-v1.6",
             pool_interval=1.0,  # Poll every 1 second
-            timeout=120.0,      # Timeout after 2 minutes
+            timeout=120.0,  # Timeout after 2 minutes
             on_enqueued=async_on_enqueued,
             on_queue_update=async_on_queue_update,
         )
-        
+
         print("[ASYNC] Try-on completed!")
         print(f"[ASYNC] Final status: {response.status}")
         if response.output:
             print(f"[ASYNC] Output images: {response.output}")
-        
+
     except TimeoutError:
         print("[ASYNC] The prediction timed out")
     except RuntimeError as e:
         print(f"[ASYNC] Prediction failed: {e}")
     except Exception as e:
         print(f"[ASYNC] An error occurred: {e}")
+
 
 # Run the async example
 asyncio.run(run_async_example())

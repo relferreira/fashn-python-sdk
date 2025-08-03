@@ -5,8 +5,8 @@ from __future__ import annotations
 from typing import Callable, Optional
 from typing_extensions import Literal, Required, TypedDict
 
-from .status_retrieve_response import StatusRetrieveResponse
 from .run_predict_params import Inputs
+from .status_retrieve_response import StatusRetrieveResponse
 
 __all__ = ["RunSubscribeParams"]
 
@@ -34,4 +34,4 @@ class RunSubscribeParams(TypedDict, total=False):
     """A callback function that is called when the prediction is enqueued."""
 
     on_queue_update: Optional[Callable[[StatusRetrieveResponse], None]]
-    """A callback function that is called when the prediction status is updated.""" 
+    """A callback function that is called when the prediction status is updated."""
