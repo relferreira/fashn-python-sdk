@@ -3,12 +3,13 @@
 Types:
 
 ```python
-from scribo_fashn_ai.types import RunPredictResponse
+from scribo_fashn_ai.types import RunPredictResponse, RunSubscribeParams
 ```
 
 Methods:
 
 - <code title="post /run">client.run.<a href="./src/scribo_fashn_ai/resources/run.py">predict</a>(\*\*<a href="src/scribo_fashn_ai/types/run_predict_params.py">params</a>) -> <a href="./src/scribo_fashn_ai/types/run_predict_response.py">RunPredictResponse</a></code>
+- <code title="post /run + polling">client.run.<a href="./src/scribo_fashn_ai/resources/run.py">subscribe</a>(\*\*<a href="src/scribo_fashn_ai/types/run_subscribe_params.py">params</a>) -> <a href="./src/scribo_fashn_ai/types/status_retrieve_response.py">StatusRetrieveResponse</a></code>
 
 # Status
 
