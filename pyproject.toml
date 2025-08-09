@@ -1,6 +1,6 @@
 [project]
 name = "scribo_fashn_ai"
-version = "0.0.1-alpha.0"
+version = "0.0.1-alpha.1"
 description = "The official Python library for the scribo-fashn-ai API"
 dynamic = ["readme"]
 license = "Apache-2.0"
@@ -35,8 +35,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/stainless-sdks/scribo-fashn-ai-python"
-Repository = "https://github.com/stainless-sdks/scribo-fashn-ai-python"
+Homepage = "https://github.com/relferreira/fashn-python-sdk"
+Repository = "https://github.com/relferreira/fashn-python-sdk"
 
 [project.optional-dependencies]
 aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.8"]
@@ -125,7 +125,7 @@ path = "README.md"
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 # replace relative links with absolute links
 pattern = '\[(.+?)\]\(((?!https?://)\S+?)\)'
-replacement = '[\1](https://github.com/stainless-sdks/scribo-fashn-ai-python/tree/main/\g<2>)'
+replacement = '[\1](https://github.com/relferreira/fashn-python-sdk/tree/main/\g<2>)'
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -159,7 +159,7 @@ reportPrivateUsage = false
 [tool.ruff]
 line-length = 120
 output-format = "grouped"
-target-version = "py37"
+target-version = "py38"
 
 [tool.ruff.format]
 docstring-code-format = true
