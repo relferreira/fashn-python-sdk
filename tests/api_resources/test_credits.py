@@ -17,13 +17,13 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestCredits:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve_balance(self, client: ScriboFashnAI) -> None:
         credit = client.credits.retrieve_balance()
         assert_matches_type(CreditRetrieveBalanceResponse, credit, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve_balance(self, client: ScriboFashnAI) -> None:
         response = client.credits.with_raw_response.retrieve_balance()
@@ -33,7 +33,7 @@ class TestCredits:
         credit = response.parse()
         assert_matches_type(CreditRetrieveBalanceResponse, credit, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve_balance(self, client: ScriboFashnAI) -> None:
         with client.credits.with_streaming_response.retrieve_balance() as response:
@@ -51,13 +51,13 @@ class TestAsyncCredits:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve_balance(self, async_client: AsyncScriboFashnAI) -> None:
         credit = await async_client.credits.retrieve_balance()
         assert_matches_type(CreditRetrieveBalanceResponse, credit, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve_balance(self, async_client: AsyncScriboFashnAI) -> None:
         response = await async_client.credits.with_raw_response.retrieve_balance()
@@ -67,7 +67,7 @@ class TestAsyncCredits:
         credit = await response.parse()
         assert_matches_type(CreditRetrieveBalanceResponse, credit, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve_balance(self, async_client: AsyncScriboFashnAI) -> None:
         async with async_client.credits.with_streaming_response.retrieve_balance() as response:
