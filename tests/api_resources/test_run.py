@@ -17,7 +17,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestRun:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_predict(self, client: ScriboFashnAI) -> None:
         run = client.run.predict(
@@ -29,7 +29,7 @@ class TestRun:
         )
         assert_matches_type(RunPredictResponse, run, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_predict_with_all_params(self, client: ScriboFashnAI) -> None:
         run = client.run.predict(
@@ -50,7 +50,7 @@ class TestRun:
         )
         assert_matches_type(RunPredictResponse, run, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_predict(self, client: ScriboFashnAI) -> None:
         response = client.run.with_raw_response.predict(
@@ -66,7 +66,7 @@ class TestRun:
         run = response.parse()
         assert_matches_type(RunPredictResponse, run, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_predict(self, client: ScriboFashnAI) -> None:
         with client.run.with_streaming_response.predict(
@@ -90,7 +90,7 @@ class TestAsyncRun:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_predict(self, async_client: AsyncScriboFashnAI) -> None:
         run = await async_client.run.predict(
@@ -102,7 +102,7 @@ class TestAsyncRun:
         )
         assert_matches_type(RunPredictResponse, run, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_predict_with_all_params(self, async_client: AsyncScriboFashnAI) -> None:
         run = await async_client.run.predict(
@@ -123,7 +123,7 @@ class TestAsyncRun:
         )
         assert_matches_type(RunPredictResponse, run, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_predict(self, async_client: AsyncScriboFashnAI) -> None:
         response = await async_client.run.with_raw_response.predict(
@@ -139,7 +139,7 @@ class TestAsyncRun:
         run = await response.parse()
         assert_matches_type(RunPredictResponse, run, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_predict(self, async_client: AsyncScriboFashnAI) -> None:
         async with async_client.run.with_streaming_response.predict(
